@@ -67,8 +67,10 @@ class Math:
 
         Args:
             angle_degree (float): angle in degree
-            accuracy (int, optional): number terms to calcylate the sine, defaults to 18
-            rounded_value (int, optional): number of decimal places to round the result, default 10.
+            accuracy (int, optional): number terms to calcylate the sine,
+                                      defaults to 18
+            rounded_value (int, optional): number of decimal places to round
+                                           the result, default 10.
 
         Returns:
             (float): sine value of angle in degree
@@ -86,5 +88,63 @@ class Math:
             result += (b * (angle_in_radians**a)) / self.factorial(a)
             b = -b
             a += 2
+
+        return round(result, rounded_value)
+
+    def cosine(self, angle_degree: float,
+               accuracy: int = 18, rounded_value: int = 10) -> float:
+        """Cosine Function
+
+        Args:
+            angle_degree (float): angle in degree
+            accuracy (int, optional): number terms to calcylate the cosine,
+                                      defaults to 18
+            rounded_value (int, optional): number of decimal places to
+                                           round the result, default 10.
+
+        Returns:
+            (float): sine value of angle in degree
+
+        Example:
+        >>> cosine(0)
+        1
+        """
+        angle_in_degree = angle_degree - ((angle_degree // 360.0) * 360.0)
+        angle_in_radians = self.radians(angle_in_degree)
+        result: float = 1.0
+        a: int = 2
+        b: int = -1
+        for _ in range(1, accuracy):
+            result += (b * (angle_in_radians ** a)) / self.factorial(a)
+            b *= -1
+            a += 2
+        return round(result, rounded_value)
+
+    def exponential(self, x: int | float, accuracy: int = 18,
+                    rounded_value: int = 10) -> float:
+        """Exponential Function
+
+        Args:
+            x (int | float): input value
+            accuracy (int, optional): number terms to calcylate
+                                      the exponential.Defaults to 18.
+            rounded_value (int, optional): number of decimal places to
+                                           round the result. Defaults to 10.
+
+        Returns:
+            float: _description_
+
+        Example:
+        >>> exponential(1)
+        2.7182818284
+        """
+        # to avoid negative number
+        if (x < 0):
+            raise ValueError("Can't Allow Negativate Number.\n")
+
+        result: float = 0.0
+
+        for n in range(accuracy):
+            result += ((x ** n) / (self.factorial(n)))
 
         return round(result, rounded_value)
