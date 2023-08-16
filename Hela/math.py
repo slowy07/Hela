@@ -91,8 +91,9 @@ class Math:
 
         return round(result, rounded_value)
 
-    def cosine(self, angle_degree: float,
-               accuracy: int = 18, rounded_value: int = 10) -> float:
+    def cosine(
+        self, angle_degree: float, accuracy: int = 18, rounded_value: int = 10
+    ) -> float:
         """Cosine Function
 
         Args:
@@ -115,13 +116,14 @@ class Math:
         a: int = 2
         b: int = -1
         for _ in range(1, accuracy):
-            result += (b * (angle_in_radians ** a)) / self.factorial(a)
+            result += (b * (angle_in_radians**a)) / self.factorial(a)
             b *= -1
             a += 2
         return round(result, rounded_value)
 
-    def exponential(self, x: int | float, accuracy: int = 18,
-                    rounded_value: int = 10) -> float:
+    def exponential(
+        self, x: int | float, accuracy: int = 18, rounded_value: int = 10
+    ) -> float:
         """Exponential Function
 
         Args:
@@ -139,12 +141,12 @@ class Math:
         2.7182818284
         """
         # to avoid negative number
-        if (x < 0):
+        if x < 0:
             raise ValueError("Can't Allow Negativate Number.\n")
 
         result: float = 0.0
 
         for n in range(accuracy):
-            result += ((x ** n) / (self.factorial(n)))
+            result += (x**n) / (self.factorial(n))
 
         return round(result, rounded_value)
