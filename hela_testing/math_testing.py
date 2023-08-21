@@ -1,6 +1,12 @@
 import unittest
 import numpy as np
-from Hela.math import GeometricMean, PowerIteration, Harmonic,Signal,FastFourierTransforms
+from Hela.math import (
+    GeometricMean,
+    PowerIteration,
+    Harmonic,
+    Signal,
+    FastFourierTransforms,
+)
 
 
 class TestGeometricMean(unittest.TestCase):
@@ -58,29 +64,30 @@ class TestHarmonic(unittest.TestCase):
         harmonic_mean = Harmonic(valid_series)
         self.assertEqual(harmonic_mean.mean(), 1.6363636363636365)
 
+
 class TestSignal(unittest.TestCase):
     def test_Signal_for_cspline1d(self):
-        vector = np.array([1,2,3,4,5])
+        vector = np.array([1, 2, 3, 4, 5])
         control_vec = np.array([10, 20, 30, 40, 50])
-        k, x, p = 2,3,2
-        Signal_DDF = Signal(vector,control_vec).cspline1d(k,
-                                              x, p)
-        self.assertEqual(Signal_DDF,3.25)
+        k, x, p = 2, 3, 2
+        Signal_DDF = Signal(vector, control_vec).cspline1d(k, x, p)
+        self.assertEqual(Signal_DDF, 3.25)
 
     def test_signal_for_cspline2d(self):
         vector = np.array([1, 2, 3, 4, 5]).reshape(-1, 1)
         control_vec = np.array([10, 60, 30, 40, 50])
         eval_point, index_knot, degree = 1.5, 0, 1
-        signal_DDF2 = Signal(vector, control_vec).cspline2d(eval_point, index_knot, degree)
+        signal_DDF2 = Signal(vector, control_vec).cspline2d(
+            eval_point, index_knot, degree
+        )
         self.assertEqual(signal_DDF2, 0.0)
-        
+
+
 class TestFastFourierTransforms(unittest.TestCase):
     def test_FFT_discrete(self):
         vector = np.array([1.0, 2.0, 3.0, 4.0])
         fft_instance = FastFourierTransforms()
         result = fft_instance.discrectefft(vector)
-        expected_result = np.array([1.0 + 0.0j, -2.0 + 2.0j, 0.0 + 0.0j, -2.0 - 2.0j])        
+        expected_result = np.array([1.0 + 0.0j, -2.0 + 2.0j, 0.0 + 0.0j, -2.0 - 2.0j])
         # Compare complex arrays with tolerance for floating-point precision
-        self.assertEqual(result.any(),expected_result.any())
-
-        
+        self.assertEqual(result.any(), expected_result.any())

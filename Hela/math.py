@@ -263,13 +263,11 @@ class Signal:
     focuses on analyzing.
     """
 
-    def __init__(self, series: np.ndarray,
-                control_matrix: np.array) -> None:
+    def __init__(self, series: np.ndarray, control_matrix: np.array) -> None:
         self.series = series
         self.control_matrix = control_matrix
-    def cspline1d(self,
-                  idx: int, x: int,
-                  p: int) -> float:
+
+    def cspline1d(self, idx: int, x: int, p: int) -> float:
         """
         CsSpline1D is a Polynominal-time and Numerically stable
         algorithm for evaluating spline curves
@@ -291,17 +289,16 @@ class Signal:
 
         for r in range(1, p + 1):
             for j in range(p, r - 1, -1):
-                alpha = (x - self.series[j + idx])
+                alpha = x - self.series[j + idx]
                 denominator = self.series[j + 1 + idx - r]
-                - self.series[j + idx - p]
+                -self.series[j + idx - p]
                 if denominator != 0:
                     alpha /= denominator
                     d[j] = (1.0 - alpha) * d[j - 1] + alpha * d[j]
 
         return d[p]
 
-    def cspline2d(self, eval_point: float,
-                  idx: int, degree: int) -> float:
+    def cspline2d(self, eval_point: float, idx: int, degree: int) -> float:
         """
         Cox-de Boor is recursion formula to support in B-splines with
         Polynominals are positive in a finite domain and zero elsewhere
@@ -319,7 +316,9 @@ class Signal:
                 return 1
             return 0
 
-        alpha = (eval_point - self.series[idx]) / (self.series[idx + degree] - self.series[idx])
+        alpha = (eval_point - self.series[idx]) / (
+            self.series[idx + degree] - self.series[idx]
+        )
 
         left = alpha * self.cspline2d(eval_point, idx + 1, degree - 1)
         right = (1 - alpha) * self.cspline2d(eval_point, idx + 1, degree - 1)
@@ -329,10 +328,10 @@ class Signal:
 
 class FastFourierTransforms:
     """Fast Fourier Transforms is algorithm that computes
-        `the Discrate Fourier Transform`
+    `the Discrate Fourier Transform`
     """
 
-    def discrectefft(self, vector:np.ndarray) -> np.ndarray:
+    def discrectefft(self, vector: np.ndarray) -> np.ndarray:
         """
         Discrecte FFT is a finite of equally-spaced samples
         of a function into a same-length sequence of equaly-
@@ -343,8 +342,11 @@ class FastFourierTransforms:
         n = len(vector)
         x_even = self.discrectefft(vector[::2])
         x_odd = self.discrectefft(vector[1::2])
-        factor = np.exp(-2j*np.pi*np.arange(n)/ n)
+        factor = np.exp(-2j * np.pi * np.arange(n) / n)
         X = np.concatenate(
-            [x_even+factor[:int(n/2)]*x_odd,
-             x_even+factor[int(n/2):]*x_odd])
+            [
+                x_even + factor[: int(n / 2)] * x_odd,
+                x_even + factor[int(n / 2) :] * x_odd,
+            ]
+        )
         return X
