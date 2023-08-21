@@ -7,11 +7,14 @@ class GeometricMean:
     """
     Calculate the geometric mean of a list of numbers.
 
-    The geometric mean of a set of numbers is calculated by multiplying all the numbers in the input list
-    and then taking the n-th root of the product, where n is the number of elements in the list.
+    The geometric mean of a set of numbers is calculated by
+    multiplying all the numbers in the input listand then
+    taking the n-th root of the product, where n is
+    the number of elements in the list.
 
     Args:
-        series (list or tuple): List of numbers for which to calculate the geometric mean.
+        series (list or tuple): List of numbers for which to
+                                calculate the geometric mean.
 
     Returns:
         float: Geometric mean of the input list.
@@ -37,11 +40,14 @@ class GeometricMean:
         """
         Calculate the geometric mean of a list of numbers.
 
-        The geometric mean of a set of numbers is calculated by multiplying all the numbers in the input list
-        and then taking the n-th root of the product, where n is the number of elements in the list.
+        The geometric mean of a set of numbers is calculated by
+        multiplying all the numbers in the input list and
+        then taking the n-th root of the product,
+        where n is the number of elements in the list.
 
         Args:
-            series (list or tuple): List of numbers for which to calculate the geometric mean.
+            series (list or tuple): List of numbers for which
+                                    to calculate the geometric mean.
 
         Returns:
             float: Geometric mean of the input list.
@@ -78,17 +84,22 @@ class PowerIteration:
     """
     Calculate the largest eigenvalue and corresponding eigenvector of a given matrix using the Power Iteration method.
 
-    This class implements the Power Iteration algorithm to find the largest eigenvalue and its corresponding eigenvector
-    of a given square matrix. The algorithm iteratively applies matrix-vector multiplications and normalization to converge
+    This class implements the Power Iteration algorithm
+    to find the largest eigenvalue and its corresponding eigenvector
+    of a given square matrix. The algorithm iteratively applies matrix-vector
+    multiplications and normalization to converge
     towards the dominant eigenvalue and eigenvector.
 
     Args:
-        error_total (float, optional): The desired tolerance for convergence. Defaults to 1e-12.
-        max_iteration (int, optional): The maximum number of iterations before termination. Defaults to 100.
-
+        error_total (float, optional): The desired tolerance for convergence.
+                                       Defaults to 1e-12.
+        max_iteration (int, optional): The maximum number of iterations before termination.
+                                       Defaults to 100.
     Methods:
-        __call__(self, input_matrix: np.ndarray, vector: np.ndarray) -> tuple[float, np.ndarray]:
-            Calculate the largest eigenvalue and corresponding eigenvector using Power Iteration.
+        __call__(self, input_matrix: np.ndarray,
+                 vector: np.ndarray) -> tuple[float, np.ndarray]:
+            Calculate the largest eigenvalue and corresponding eigenvector
+            using Power Iteration.
 
     Example:
     >>> input_matrix = np.array([[2, 1], [1, 3]])
@@ -243,3 +254,97 @@ class Harmonic:
         for val in self.series:
             answer += 1 / val
         return len(self.series) / answer
+
+
+class Signal:
+    """
+    Calculate the singal processing
+    signal processing is an electrical engineer subfield that
+    focuses on analyzing.
+    """
+
+    def __init__(self, series: np.ndarray,
+                control_matrix: np.array) -> None:
+        self.series = series
+        self.control_matrix = control_matrix
+    def cspline1d(self,
+                  idx: int, x: int,
+                  p: int) -> float:
+        """
+        CsSpline1D is a Polynominal-time and Numerically stable
+        algorithm for evaluating spline curves
+        Args:
+            control_matrix (np.array): index of knot interval that
+                                       contains x.
+            idx (int): Index of knot interval that contains x.
+            x (int): Position.
+            p (int): Degree of B-spline.
+
+        Returns:
+            float: value of evaluating spline curve
+        """
+        d = np.zeros(p + 1)
+        for r in range(0, p + 1):
+            r_adjusted = r + idx - p  # Adjusted index
+            if 0 <= r_adjusted < len(self.control_matrix):  # Check for valid index
+                d[r] = self.control_matrix[r_adjusted]
+
+        for r in range(1, p + 1):
+            for j in range(p, r - 1, -1):
+                alpha = (x - self.series[j + idx])
+                denominator = self.series[j + 1 + idx - r]
+                - self.series[j + idx - p]
+                if denominator != 0:
+                    alpha /= denominator
+                    d[j] = (1.0 - alpha) * d[j - 1] + alpha * d[j]
+
+        return d[p]
+
+    def cspline2d(self, eval_point: float,
+                  idx: int, degree: int) -> float:
+        """
+        Cox-de Boor is recursion formula to support in B-splines with
+        Polynominals are positive in a finite domain and zero elsewhere
+
+        Args:
+            eval_point (float): Evaluation point
+            idx (int): Index of knot interval
+            degree (int): Degree of B-spline.
+
+        Returns:
+            float: Value of evaluting spline curve
+        """
+        if degree == 0:
+            if (self.series[idx] <= eval_point) and (eval_point < self.series[idx + 1]):
+                return 1
+            return 0
+
+        alpha = (eval_point - self.series[idx]) / (self.series[idx + degree] - self.series[idx])
+
+        left = alpha * self.cspline2d(eval_point, idx + 1, degree - 1)
+        right = (1 - alpha) * self.cspline2d(eval_point, idx + 1, degree - 1)
+
+        return float(left + right)
+
+
+class FastFourierTransforms:
+    """Fast Fourier Transforms is algorithm that computes
+        `the Discrate Fourier Transform`
+    """
+
+    def discrectefft(self, vector:np.ndarray) -> np.ndarray:
+        """
+        Discrecte FFT is a finite of equally-spaced samples
+        of a function into a same-length sequence of equaly-
+        spaced sample of Fast Fouruier Transforms
+        """
+        if vector.ndim == 1 or len(vector) == 1:
+            return vector
+        n = len(vector)
+        x_even = self.discrectefft(vector[::2])
+        x_odd = self.discrectefft(vector[1::2])
+        factor = np.exp(-2j*np.pi*np.arange(n)/ n)
+        X = np.concatenate(
+            [x_even+factor[:int(n/2)]*x_odd,
+             x_even+factor[int(n/2):]*x_odd])
+        return X
