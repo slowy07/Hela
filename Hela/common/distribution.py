@@ -1,7 +1,7 @@
 from __future__ import annotations
 import math
 import random
-
+import numpy as np
 
 class NormalDistribution:
     @staticmethod
@@ -325,3 +325,73 @@ class ChiSquareDistribution:
 
         cdf_values = 1.0 - gamma_incomplete(df / 2.0, x / 2.0)
         return cdf_values
+
+
+class Poisson:
+    
+    def __init__(self, x: int,
+                 alpha: float = 1.0) -> None:
+        """
+        # Description
+        Poisson Distribution is a discrete probability distribution
+        that expresses the probabilty of a given number of even
+        occurring in fixed interval of time or space if these
+        events occur with a known constant mean rate and independently of 
+        the time since the last event.
+        Args:
+            x (int): input value for calculate
+            alpha (float,optional): this is a degree
+                                    freedom for calculate
+                                    that.
+        """
+        self.x = x
+        self.alpha = alpha
+    @staticmethod
+    def poisson_pmf(self) -> float:
+        """
+        calculate with pmf of poisson distributions algorithm
+        Returns:
+            float: result from that calculate
+        """
+        result = pow(self.alpha,self.x) * np.exp(-self.alpha)
+        result /= math.factorial(self.x)
+        return result
+    
+    @staticmethod
+    def poisson_cdf(self):
+        """
+        calculate with cdf of poisson distribution algorithm
+        Returns:
+            float: resukt from that calculate
+        """
+        par_range = np.arange(self.x) 
+        result = [pow(self.alpha,i) / math.factorial(i) for i in par_range]
+        result *=np.exp(-self.alpha)
+        return result
+
+class student_distribution:
+    """
+    Studentn Distribution (familiar with name t-distribution)
+    is a continous probabilty distribution that  generalizes 
+    the standard normal distribution. Like the latter,
+    it is symmetric around zero and bell-shaped.
+    """
+    def __init__(self,vector: np.ndarray,
+                 degree: int = 10) -> None:
+        self.vector = vector
+        self.v = degree
+
+    @staticmethod
+    def t_distribution_pdf(self)-> float:
+        """
+        Calculate with Student Distribution with pdf
+        Returns:
+            float: result from that 
+        """
+        t = (self.vector - np.mean(self.vector))
+        t /= (np.std(self.vector) / np.sqrt(self.shape[0]))
+        
+        result = (math.gamma((self.v+1)/2)
+                  / math.gamma(self.v/2)*np.sqrt(self.v *np.phi))
+        result *= ((t**2/self.v +1)** -((self.v+1)/2))
+        return result

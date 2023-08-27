@@ -507,3 +507,53 @@ class Gaussian:
             (str): a string representation of the gaussian instance
         """
         return f"Gaussian(x={self.x}, mu={self.mu}, sigma={self.sigma})"
+
+
+class ReLU:
+    """
+    # Description
+
+    Relu is a function receives any negative input,
+    it returns 0,the function any positives value x,it
+    returns that value.As result,the output has a range of 0
+    to infinite
+    """
+    def __init__(self,
+                 vector: list[int|float]) -> None:
+        self.vec = vector
+    
+    def calculate_ReLu(self) -> list[int|float]:
+        """
+        calculate Relu for the input Vector
+        Returns:
+            list[float]: A list of Relu at given input
+        """
+        return [max(0,i) for i in self.vec]
+    
+    def __repr__(self) -> str:
+        return f"RelU({self.vec})"
+class Logistic_map:
+    """
+    # Description
+    Logistic Map is `Polynominal mapping`,the usual values
+    of interest for the parameter r are those in the interval [0,4],
+    so that `Xn` remains bounded on [0,1].
+    """
+    def __init__(self,n:int,
+                 learning_path:float) -> None:
+        self.n = n
+        self.learning_path = learning_path
+
+    def calculate(self) -> float:
+        """
+        calculate Logistic Map for input vector
+        Returns:
+            float: the value of calculate for logistic Map
+        """
+        return self.learning_path * self.n * (1 - self.n)
+    
+    def show_iterable(self) -> str:
+        result_str = ""
+        for i in range(1, self.n + 1):
+            result_str += f"iter: {i} | result = {self.calculate()}\n"
+        return result_str
