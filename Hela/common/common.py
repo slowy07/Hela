@@ -510,37 +510,62 @@ class Gaussian:
 
 
 class ReLU:
-    """
-    # Description
 
-    Relu is a function receives any negative input,
-    it returns 0,the function any positives value x,it
-    returns that value.As result,the output has a range of 0
-    to infinite
-    """
-    def __init__(self,
-                 vector: list[int|float]) -> None:
-        self.vec = vector
-    
-    def calculate_ReLu(self) -> list[int|float]:
+    def __init__(self, vector: list[int | float]) -> None:
         """
+        # Description
+
+        Relu is a function receives any negative input,
+        it returns 0,the function any positives value x,it
+        returns that value.As result,the output has a range of 0
+        to infinite
+        Args:
+            vector (list[int | float]) : input values  
+        """
+        self.vec = vector
+
+    def calculate_ReLu(self) -> list[int | float]:
+        """
+        # Description
         calculate Relu for the input Vector
         Returns:
             list[float]: A list of Relu at given input
+
+        # example
+        >>> from Hela.common.common import ReLU
+        >>> a = [1,2,3,4]
+        >>> ReLU(a).calculate_ReLu()
+        [1, 2, 3, 4]
+        >>> b = [-1,2,3,4]
+        >>> ReLU(b).calculate_ReLu()
+        [0, 2, 3, 4]
+        >>> # for know form origional b is
+        >>> ReLU(b)
+        RelU([-1, 2, 3, 4])
         """
-        return [max(0,i) for i in self.vec]
-    
+        return [max(0, i) for i in self.vec]
+
     def __repr__(self) -> str:
         return f"RelU({self.vec})"
+
+
 class Logistic_map:
-    """
-    # Description
-    Logistic Map is `Polynominal mapping`,the usual values
-    of interest for the parameter r are those in the interval [0,4],
-    so that `Xn` remains bounded on [0,1].
-    """
-    def __init__(self,n:int,
-                 learning_path:float) -> None:
+    
+    def __init__(self, n: int, learning_path: float) -> None:
+        """
+        # Description
+        Logistic Map is `Polynominal mapping`,the usual values
+        of interest for the parameter r are those in the interval [0,4],
+        so that `Xn` remains bounded on [0,1].
+        Args:
+        n (int) :input value for equivalently
+        learning_path (float): step in itterable
+
+        Example:
+        >>> from Hela.common.common import Logistic_map
+        >>> Logistic_map(10,0.001).calculate()
+        -0.09
+        """
         self.n = n
         self.learning_path = learning_path
 
@@ -551,9 +576,9 @@ class Logistic_map:
             float: the value of calculate for logistic Map
         """
         return self.learning_path * self.n * (1 - self.n)
-    
+
     def show_iterable(self) -> str:
-        result_str = ""
+        result_str:str = ""
         for i in range(1, self.n + 1):
             result_str += f"iter: {i} | result = {self.calculate()}\n"
         return result_str

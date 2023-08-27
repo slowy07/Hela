@@ -1,6 +1,6 @@
 import unittest
 import math
-from Hela.common.common import Sigmoid, Gaussian
+from Hela.common.common import Sigmoid, Gaussian,ReLU
 
 
 class SigmoidTest(unittest.TestCase):
@@ -26,3 +26,11 @@ class GaussianTest(unittest.TestCase):
         gaussian_calc = Gaussian(x=2.0, mu=1.0, sigma=0.5)
         representation = repr(gaussian_calc)
         self.assertEqual(representation, "Gaussian(x=2.0, mu=1.0, sigma=0.5)")
+
+class ReLU(unittest.TestCase):
+    def Test_ReLU(self):
+        vector = [1,2,3,4]
+        result = ReLU(vector).calculate_ReLu(vector)
+        expeted_value = [1, 2, 3, 4]
+        self.assertEqual(result.any(),
+                         expeted_value.any())

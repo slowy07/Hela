@@ -3,6 +3,7 @@ import math
 import random
 import numpy as np
 
+
 class NormalDistribution:
     @staticmethod
     def normal_pdf(x: float, mean: float, sigma: float) -> float:
@@ -328,70 +329,89 @@ class ChiSquareDistribution:
 
 
 class Poisson:
-    
-    def __init__(self, x: int,
-                 alpha: float = 1.0) -> None:
-        """
+    """
         # Description
         Poisson Distribution is a discrete probability distribution
         that expresses the probabilty of a given number of even
         occurring in fixed interval of time or space if these
-        events occur with a known constant mean rate and independently of 
+        events occur with a known constant mean rate and independently of
         the time since the last event.
+    """
+    @staticmethod
+    def poisson_pmf(x:int,alpha:float) -> float:
+        """
+        calculate with pmf of poisson distributions algorithm
         Args:
             x (int): input value for calculate
             alpha (float,optional): this is a degree
                                     freedom for calculate
                                     that.
-        """
-        self.x = x
-        self.alpha = alpha
-    @staticmethod
-    def poisson_pmf(self) -> float:
-        """
-        calculate with pmf of poisson distributions algorithm
         Returns:
             float: result from that calculate
+        Example:
+        >>> from Hela.common.distribution import Poisson
+        >>> Poisson.poisson_pmf(5,2)
+        0.03608940886309672
         """
-        result = pow(self.alpha,self.x) * np.exp(-self.alpha)
-        result /= math.factorial(self.x)
+        result = pow(alpha, x) * np.exp(-alpha)
+        result /= math.factorial(x)
         return result
-    
+
     @staticmethod
-    def poisson_cdf(self):
+    def poisson_cdf(x:int,
+                    alpha:float):
         """
         calculate with cdf of poisson distribution algorithm
+        Args:
+            x (int): input value for calculate
+            alpha (float,optional): this is a degree
+                                    freedom for calculate
+                                    that.
         Returns:
             float: resukt from that calculate
+        Example:
+        >>> from Hela.common.distribution import Poisson
+        >>> Poisson.poisson_cdf(5,2)
+        array([0.13533528, 0.27067057, 0.27067057, 0.18044704, 0.09022352])
         """
-        par_range = np.arange(self.x) 
-        result = [pow(self.alpha,i) / math.factorial(i) for i in par_range]
-        result *=np.exp(-self.alpha)
+        par_range = np.arange(x)
+        result = np.array([pow(alpha, i) / math.factorial(i) for i in par_range])
+        result *= np.exp(-alpha)
         return result
+
 
 class student_distribution:
     """
     Studentn Distribution (familiar with name t-distribution)
-    is a continous probabilty distribution that  generalizes 
+    is a continous probabilty distribution that  generalizes
     the standard normal distribution. Like the latter,
     it is symmetric around zero and bell-shaped.
     """
-    def __init__(self,vector: np.ndarray,
-                 degree: int = 10) -> None:
-        self.vector = vector
-        self.v = degree
-
     @staticmethod
-    def t_distribution_pdf(self)-> float:
+    def t_distribution_pdf(vector: np.ndarray,
+                           degree:int = 10) -> float:
         """
         Calculate with Student Distribution with pdf
+        Args:
+        vector (np.ndarray) : this paramater represents input values
+        degree (int,optional) : value for represents particular node
+
         Returns:
-            float: result from that 
+            float: result from that
+        Example:
+        >>> from Hela.common.distribution import student_distribution
+        >>> import numpy as np
+        >>> a = np.array([1,2,3,4])
+        >>> student_distribution.t_distribution_pdf(a,10)
+        array([0.61917584, 8.00552478, 8.00552478, 0.61917584])
         """
-        t = (self.vector - np.mean(self.vector))
-        t /= (np.std(self.vector) / np.sqrt(self.shape[0]))
-        
-        result = (math.gamma((self.v+1)/2)
-                  / math.gamma(self.v/2)*np.sqrt(self.v *np.phi))
-        result *= ((t**2/self.v +1)** -((self.v+1)/2))
+        t = vector - np.mean(vector)
+        t /= np.std(vector) / np.sqrt(vector.shape[0])
+
+        result = (
+            math.gamma((degree + 1) / 2)
+            / math.gamma(degree / 2)
+            * np.sqrt(degree * np.pi)
+        )
+        result *= (t**2 / degree + 1) ** -((degree + 1) / 2)
         return result
