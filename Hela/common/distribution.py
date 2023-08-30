@@ -330,15 +330,16 @@ class ChiSquareDistribution:
 
 class Poisson:
     """
-        # Description
-        Poisson Distribution is a discrete probability distribution
-        that expresses the probabilty of a given number of even
-        occurring in fixed interval of time or space if these
-        events occur with a known constant mean rate and independently of
-        the time since the last event.
+    # Description
+    Poisson Distribution is a discrete probability distribution
+    that expresses the probabilty of a given number of even
+    occurring in fixed interval of time or space if these
+    events occur with a known constant mean rate and independently of
+    the time since the last event.
     """
+
     @staticmethod
-    def poisson_pmf(x:int,alpha:float) -> float:
+    def poisson_pmf(x: int, alpha: float) -> float:
         """
         calculate with pmf of poisson distributions algorithm
         Args:
@@ -358,8 +359,7 @@ class Poisson:
         return result
 
     @staticmethod
-    def poisson_cdf(x:int,
-                    alpha:float):
+    def poisson_cdf(x: int, alpha: float):
         """
         calculate with cdf of poisson distribution algorithm
         Args:
@@ -387,9 +387,9 @@ class student_distribution:
     the standard normal distribution. Like the latter,
     it is symmetric around zero and bell-shaped.
     """
+
     @staticmethod
-    def t_distribution_pdf(vector: np.ndarray,
-                           degree:int = 10) -> float:
+    def t_distribution_pdf(vector: np.ndarray, degree: int = 10) -> float:
         """
         Calculate with Student Distribution with pdf
         Args:

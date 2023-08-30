@@ -8,7 +8,7 @@ from Hela.common.distribution import (
     DirichletDistribution,
     ChiSquareDistribution,
     Poisson,
-    student_distribution
+    student_distribution,
 )
 
 
@@ -75,23 +75,23 @@ class TestChiSquaredDistribution(unittest.TestCase):
         cdf = ChiSquareDistribution.chi_squared_cdf(2.5, df=2)
         self.assertAlmostEqual(cdf, 0.48982412914811513)
 
+
 class TestingPoisson(unittest.TestCase):
     def test_poisson_pdf(self):
-        pmf = Poisson.poisson_pmf(x=5,alpha=2)
-        self.assertAlmostEqual(pmf,0.03608940886309672)
-    
+        pmf = Poisson.poisson_pmf(x=5, alpha=2)
+        self.assertAlmostEqual(pmf, 0.03608940886309672)
+
     def test_poisson_cdf(self):
-        cdf = Poisson.poisson_cdf(5,alpha=2)
-        expected_result = np.array([0.13533528, 0.27067057,
-                                    0.27067057, 0.18044704, 0.09022352])
-        self.assertAlmostEqual(cdf.any(),
-                               expected_result.any())
+        cdf = Poisson.poisson_cdf(5, alpha=2)
+        expected_result = np.array(
+            [0.13533528, 0.27067057, 0.27067057, 0.18044704, 0.09022352]
+        )
+        self.assertAlmostEqual(cdf.any(), expected_result.any())
+
 
 class Test_Student_distribution(unittest.TestCase):
-    
     def test_T_Distribution_pdf(self):
-        vector = np.array([1,2,3,4])
+        vector = np.array([1, 2, 3, 4])
         pdf = student_distribution.t_distribution_pdf(vector)
         expected_result = np.array([0.61917584, 8.00552478, 8.00552478, 0.61917584])
-        self.assertAlmostEqual(pdf.any(),
-                               expected_result.any())
+        self.assertAlmostEqual(pdf.any(), expected_result.any())

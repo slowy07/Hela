@@ -510,7 +510,6 @@ class Gaussian:
 
 
 class ReLU:
-
     def __init__(self, vector: list[int | float]) -> None:
         """
         # Description
@@ -520,7 +519,7 @@ class ReLU:
         returns that value.As result,the output has a range of 0
         to infinite
         Args:
-            vector (list[int | float]) : input values  
+            vector (list[int | float]) : input values
         """
         self.vec = vector
 
@@ -550,7 +549,6 @@ class ReLU:
 
 
 class Logistic_map:
-    
     def __init__(self, n: int, learning_path: float) -> None:
         """
         # Description
@@ -578,7 +576,7 @@ class Logistic_map:
         return self.learning_path * self.n * (1 - self.n)
 
     def show_iterable(self) -> str:
-        result_str:str = ""
+        result_str: str = ""
         for i in range(1, self.n + 1):
             result_str += f"iter: {i} | result = {self.calculate()}\n"
         return result_str
