@@ -4,6 +4,7 @@ from typing import Callable, Union
 import numpy as np
 from Hela.common.differential import Differential
 
+
 class AntiDifferential:
     @staticmethod
     def general_antiderivative(
@@ -11,7 +12,7 @@ class AntiDifferential:
         a: float,
         b: float,
         num_interval: int = 4,
-        method: str = "riemann"
+        method: str = "riemann",
     ) -> float:
         """
         Calculate the general antiderivative of a function.
@@ -69,7 +70,9 @@ class AntiDifferential:
             raise ValueError(f"Error: {powerrule_antidifferential}")
 
     @staticmethod
-    def Usubstitution(f: Callable[[float], float], g: Callable[[float], float], a: float, b: float) -> float:
+    def Usubstitution(
+        f: Callable[[float], float], g: Callable[[float], float], a: float, b: float
+    ) -> float:
         """
         Perform integration by substitution (U-substitution).
 
@@ -91,7 +94,9 @@ class AntiDifferential:
             raise ValueError(f"Error: {error_value}")
 
     @staticmethod
-    def Mean_Value_AntiDifferential(f: Callable[[float], float], a: float, b: float) -> float:
+    def Mean_Value_AntiDifferential(
+        f: Callable[[float], float], a: float, b: float
+    ) -> float:
         """
         Calculate the mean value using the Mean Value Theorem for integrals.
 

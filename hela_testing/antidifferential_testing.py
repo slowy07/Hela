@@ -2,6 +2,7 @@ import unittest
 from Hela.common.antidifferential import AntiDifferential
 from math import sqrt
 
+
 class Testing_AntiDifferential(unittest.TestCase):
     def setUp(self):
         self.intergral = AntiDifferential()
@@ -23,8 +24,7 @@ class Testing_AntiDifferential(unittest.TestCase):
         self.assertEqual(result, 4.0)
 
     def testing_Usubtitution(self):
-        g_formula = lambda x : sqrt(x**4+11)
-        f_formula = lambda x : x**3*g_formula(x)
-        result = AntiDifferential.Usubstitution(f_formula,g_formula,1,2)
-        self.assertEqual(result,-30.31)
- 
+        g_formula = lambda x: sqrt(x**4 + 11)
+        f_formula = lambda x: x**3 * g_formula(x)
+        result = AntiDifferential.Usubstitution(f_formula, g_formula, 1, 2)
+        self.assertEqual(result, -30.31)
