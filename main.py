@@ -1,4 +1,4 @@
 import Hela.math as math
 
-print(math.tambah(12, 3))
-print(math.kurang(20, 15))
+print(math.tambah(15, 2))
+print(math.faktorial(6))
