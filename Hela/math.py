@@ -152,5 +152,5 @@ def normal_pdf(x: float, mean: float, sigma: float) -> float:
 
 def luas_lingkaran(jari: Union[float, int]) -> float:
     if not isinstance(jari, (float, int)):
-        return error.TipeError(["float", "int"])
+        return error.TipeError(["int", "float"])
     return math.pi * jari**2
