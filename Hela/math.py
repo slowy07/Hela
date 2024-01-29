@@ -1,4 +1,6 @@
 import math
+import Hela.util.error as error
+from typing import Union
 
 def tambah(a: int, b: int) -> int:
     """
@@ -7,14 +9,15 @@ def tambah(a: int, b: int) -> int:
     parameter:
         a (int): angka pertama
         b (int): angka kedua
-    
+
     return:
         (int): hasil dari angka pertama + angka kedua
     """
     if isinstance(a, int) and isinstance(b, int):
         return a + b
     else:
-        raise TypeError("kamu memasukkan tipe data yang salah, seharusnya adalah int")
+        return error.TipeError(["int"])
+
 
 def kurang(a: int, b: int) -> int:
     """
@@ -23,14 +26,15 @@ def kurang(a: int, b: int) -> int:
     parameter:
         a (int): angka pertama
         b (int): angka kedua
-    
+
     return:
         (int): hasil dari angka pertama - angka kedua
     """
     if isinstance(a, int) and isinstance(b, int):
         return a - b
     else:
-        raise TypeError("kamu memasukkan tipe data yang salah, seharusnya adalah int")
+        return error.TipeError(["int"])
+
 
 def bagi(a: int, b: int) -> int:
     """
@@ -39,34 +43,36 @@ def bagi(a: int, b: int) -> int:
     parameter:
         a (int): angka pertama
         b (int): angka kedua
-    
+
     return:
         (int): hasil dari angka pertama / angka kedua
     """
-    if isinstance(a, int) and isinstance(b, int): 
+    if isinstance(a, int) and isinstance(b, int):
         try:
             return a / b
         except ZeroDivisionError:
-            print("tidak bisa dibagikan dengan nol")
+            return error.ErrorDibagiNol()
     else:
-        raise TypeError("kamu memasukkan tipe data yang salah, seharusnya adalah int")
+        return error.TipeError(["int"])
+
 
 def faktorial(angka: int) -> int:
     """
     menghitung faktorial dari sebuah input nilai
-    
+
     parameter:
         angka (int): angka yang ingin dimasukkan
     return:
         int: angka yang dihasilkan daripada proses faktorial
     """
-    if isinstance(angka, int): 
+    if isinstance(angka, int):
         hasil = 1
         for i in range(1, angka + 1):
             hasil *= i
         return hasil
     else:
-        raise TypeError("kamu memasukkan tipe data yang salah, seharusnya adalah int")
+        return error.TipeError(["int"])
+
 
 def jumlah_deret_geometri(utama: int, rasio_umum: int, jumlah: int) -> int:
     """
@@ -80,12 +86,17 @@ def jumlah_deret_geometri(utama: int, rasio_umum: int, jumlah: int) -> int:
     return:
         (int): hasil deret geometri dengan rumus Sn = a(1-r^n)/(1-r)
     """
-    if isinstance(utama, int) and isinstance(rasio_umum, int) and isinstance(jumlah, int):
+    if (
+        isinstance(utama, int)
+        and isinstance(rasio_umum, int)
+        and isinstance(jumlah, int)
+    ):
         if rasio_umum == 1:
             return jumlah * utama
         return (utama / (1 - rasio_umum)) * (1 - rasio_umum**jumlah)
     else:
-        raise TypeError("kamu memasukkan tipe data yang salah, seharusnya adalah int")    
+        return error.TipeError(["int"])
+
 
 def modus(arr: list[int | float]) -> int | float:
     """
@@ -95,7 +106,7 @@ def modus(arr: list[int | float]) -> int | float:
     parameter:
         arr (list[int atau float]): parameter data
 
-    
+
     return:
         (int atau float): output ini muncul sebagai sesuai dengan item yang sering terjadi
     """
@@ -115,7 +126,8 @@ def modus(arr: list[int | float]) -> int | float:
             raise ValueError("nan")
         return result
     else:
-        raise TypeError("kamu memasukkan tipe data yang salah, seharusnya adalah int")
+        return error.TipeError(["int"])
+
 
 def normal_pdf(x: float, mean: float, sigma: float) -> float:
     """
@@ -135,4 +147,10 @@ def normal_pdf(x: float, mean: float, sigma: float) -> float:
         pdf_value = coefficient * math.exp(exponent)
         return pdf_value
     else:
-        raise TypeError("kamu memasukkan tipe data yang salah, seharusnya adalah int")
+        return error.TipeError(["int"])
+
+
+def luas_lingkaran(jari: Union[float, int]) -> float:
+    if not isinstance(jari, (float, int)):
+        return error.TipeError(["float", "int"])
+    return math.pi * jari**2
