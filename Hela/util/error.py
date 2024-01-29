@@ -5,5 +5,5 @@ class TipeError(TypeError):
 
 class ErrorDibagiNol(ZeroDivisionError):
     def __init__(self):
-        pesan = "Error: tidak bisa dibagikan dengan nol!"
+        pesan = f"Error: Tidak dibagikan dengan nol!"
         super().__init__(pesan)
