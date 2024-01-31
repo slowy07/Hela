@@ -1,6 +1,7 @@
 import math
 import Hela.util.error as error
 
+
 def tambah(a: int, b: int) -> int:
     """
     membuat fungsi pertambahan
@@ -8,7 +9,7 @@ def tambah(a: int, b: int) -> int:
     parameter:
         a (int): angka pertama
         b (int): angka kedua
-    
+
     return:
         (int): hasil dari angka pertama + angka kedua
     """
@@ -17,6 +18,7 @@ def tambah(a: int, b: int) -> int:
     else:
         return error.TipeError(["int"])
 
+
 def kurang(a: int, b: int) -> int:
     """
     membuat fungsi pengurangan
@@ -24,7 +26,7 @@ def kurang(a: int, b: int) -> int:
     parameter:
         a (int): angka pertama
         b (int): angka kedua
-    
+
     return:
         (int): hasil dari angka pertama - angka kedua
     """
@@ -33,6 +35,7 @@ def kurang(a: int, b: int) -> int:
     else:
         return error.TipeError(["int"])
 
+
 def bagi(a: int, b: int) -> int:
     """
     membuat fungsi pembagian
@@ -40,11 +43,11 @@ def bagi(a: int, b: int) -> int:
     parameter:
         a (int): angka pertama
         b (int): angka kedua
-    
+
     return:
         (int): hasil dari angka pertama / angka kedua
     """
-    if isinstance(a, int) and isinstance(b, int): 
+    if isinstance(a, int) and isinstance(b, int):
         try:
             return a / b
         except ZeroDivisionError:
@@ -52,22 +55,24 @@ def bagi(a: int, b: int) -> int:
     else:
         return error.TipeError(["int"])
 
+
 def faktorial(angka: int) -> int:
     """
     menghitung faktorial dari sebuah input nilai
-    
+
     parameter:
         angka (int): angka yang ingin dimasukkan
     return:
         int: angka yang dihasilkan daripada proses faktorial
     """
-    if isinstance(angka, int): 
+    if isinstance(angka, int):
         hasil = 1
         for i in range(1, angka + 1):
             hasil *= i
         return hasil
     else:
         return error.TipeError(["int"])
+
 
 def jumlah_deret_geometri(utama: int, rasio_umum: int, jumlah: int) -> int:
     """
@@ -81,12 +86,17 @@ def jumlah_deret_geometri(utama: int, rasio_umum: int, jumlah: int) -> int:
     return:
         (int): hasil deret geometri dengan rumus Sn = a(1-r^n)/(1-r)
     """
-    if isinstance(utama, int) and isinstance(rasio_umum, int) and isinstance(jumlah, int):
+    if (
+        isinstance(utama, int)
+        and isinstance(rasio_umum, int)
+        and isinstance(jumlah, int)
+    ):
         if rasio_umum == 1:
             return jumlah * utama
         return (utama / (1 - rasio_umum)) * (1 - rasio_umum**jumlah)
     else:
         return error.TipeError(["int"])
+
 
 def modus(arr: list[int | float]) -> int | float:
     """
@@ -96,7 +106,7 @@ def modus(arr: list[int | float]) -> int | float:
     parameter:
         arr (list[int atau float]): parameter data
 
-    
+
     return:
         (int atau float): output ini muncul sebagai sesuai dengan item yang sering terjadi
     """
@@ -118,6 +128,7 @@ def modus(arr: list[int | float]) -> int | float:
     else:
         return error.TipeError(["int", "float"])
 
+
 def normal_pdf(x: float, mean: float, sigma: float) -> float:
     """
     fungsi menghitung kepadatan probabilitas (PDF) dari distribusi normal.
@@ -136,4 +147,4 @@ def normal_pdf(x: float, mean: float, sigma: float) -> float:
         pdf_value = coefficient * math.exp(exponent)
         return pdf_value
     else:
-        return error.TipeError(["int"])
+        return error.TipeError(["float"])
