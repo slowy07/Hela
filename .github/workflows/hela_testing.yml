@@ -14,5 +14,5 @@ jobs:
           uses: actions/setup-python@v5
         - run: | 
             python -m pip install pytest
-            python -m pytest hela_testing/main_test.py
+            python -m pytest hela_testing/main_test.py --verbose
     
