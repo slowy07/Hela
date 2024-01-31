@@ -1,0 +1,16 @@
+name: "testing hela github action"
+
+on: [push, pull_request]
+
+jobs:
+  build:  
+    runs-on: ubuntu-latest
+
+    steps:
+        - name: "cek kode"
+          uses: actions/checkout@v4
+
+        - name: "install python"
+          uses: actions/setup-python@v5
+        - run: python -m pytest hela_testing/main_test.py
+    
